@@ -5,20 +5,18 @@ import method
 from data import Courier
 from data import Urls
 
-
 class TestCreateCourier:
 
     @allure.title("Ручка /api/v1/courier")
     @allure.description("Создаём курьера, используя корректные данные")
-    def test_create_courier_201(self):
+    def test_create_courier_201(self, login_new_courier):
         with allure.step('Формирование параметров курьера: логин, пароль и имя'):
-            login_pass = method.register_new_courier_and_return_login_password()
 
             payload = \
                 {
-                    "login": login_pass[0],
-                    "password": login_pass[1],
-                    "firstName": login_pass[2]
+                    "login": login_new_courier[0],
+                    "password": login_new_courier[1],
+                    "firstName": login_new_courier[2]
                 }
         with allure.step('Запрос на создание курьера'):
             response = requests.post(Urls.URL_MAIN + Urls.URL_CREATE_COURIER, data=payload)
@@ -29,15 +27,14 @@ class TestCreateCourier:
 
     @allure.title("Ручка /api/v1/courier")
     @allure.description("Создаём курьера, затем создаём ещё одного курьера, с такими же данными. Должна быть неудача.")
-    def test_create_simular_couriers_error_409(self):
+    def test_create_similar_couriers_error_409(self, login_new_courier):
         with allure.step('Создание нового курьера и получение его ID'):
-            login_pass = method.register_new_courier_and_return_login_password()
 
             payload = \
                 {
-                    "login": login_pass[0],
-                    "password": login_pass[1],
-                    "firstName": login_pass[2]
+                    "login": login_new_courier[0],
+                    "password": login_new_courier[1],
+                    "firstName": login_new_courier[2]
                 }
         with allure.step('Запрос на создание курьера, используя занятый логин'):
             response = requests.post(Urls.URL_MAIN + Urls.URL_CREATE_COURIER, data=payload)

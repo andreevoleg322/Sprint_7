@@ -1,6 +1,5 @@
 import pytest
 import requests
-import method
 import allure
 from data import Urls
 from data import LoginCourier
@@ -9,12 +8,12 @@ from data import LoginCourier
 class TestLoginCourier:
     @allure.title("Ручка /api/v1/courier/login")
     @allure.description("Создаём нового курьера, затем логинимся и подтверждаем, что в теле ответа есть 'id' и там не пусто")
-    def test_login_courier_positive(self):
+    def test_login_courier_positive(self, login_new_courier):
         with allure.step('Получение данных зарегистрированного курьера'):
-            login_pass = method.register_new_courier_and_return_login_password()
+
             data = {
-                    "login": login_pass[0],
-                    "password": login_pass[1]
+                    "login": login_new_courier[0],
+                    "password": login_new_courier[1]
                     }
         with allure.step('Запрос на авторизацию'):
             response = requests.post(Urls.URL_MAIN + Urls.URL_LOGIN_COURIER, data)
