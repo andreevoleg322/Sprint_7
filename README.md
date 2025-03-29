@@ -1,0 +1,22 @@
+1) Создание курьера
+
+test_create_courier_201
+test_create_simular_couriers_error_409
+test_create_courier_empty_field_error
+
+2) Логин курьера
+
+test_login_courier_positive
+test_login_courier_empty_fields_error
+test_login_courier_wrong_login
+
+3) Создание заказа
+
+test_create_order_positive
+test_create_order_body_have_id
+
+4) Список заказов
+
+test_get_list_orders_limit_10_positive
+test_get_list_orders_by_courier_id
+test_get_list_orders_limit_100_error
